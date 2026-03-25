@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  backend:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - GPU_ENABLED=true
+      - NVIDIA_VISIBLE_DEVICES=all

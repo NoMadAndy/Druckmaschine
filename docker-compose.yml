@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - app-logs:/app/logs
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://druckmaschine:druckmaschine@db:5432/druckmaschine
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=change-me-in-production
+      - GPU_ENABLED=${GPU_ENABLED:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./backend
+          target: /app
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_WS_URL=ws://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=druckmaschine
+      - POSTGRES_PASSWORD=druckmaschine
+      - POSTGRES_DB=druckmaschine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U druckmaschine"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  watcher:
+    build: ./backend
+    command: python -m app.services.watcher
+    volumes:
+      - ./:/repo
+      - app-logs:/app/logs
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://druckmaschine:druckmaschine@db:5432/druckmaschine
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  app-logs:
