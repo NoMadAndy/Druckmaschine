@@ -5,6 +5,12 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.4] - 2026-03-26
+
+### Behoben
+- React Router v7 Deprecation-Warnungen behoben: `v7_startTransition` und `v7_relativeSplatPath` Future-Flags aktiviert
+- 500-Fehler bei Registrierung behoben: `from_attributes` Config zu `AuthResponse` hinzugefuegt fuer korrekte ORM-Serialisierung
+
 ## [0.1.3] - 2026-03-26
 
 ### Behoben
