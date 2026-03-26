@@ -5,6 +5,12 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.2] - 2026-03-26
+
+### Behoben
+- Port-Binding-Fehler: Host-Ports in docker-compose.yml waren hardcoded und ignorierten .env-Einstellungen
+- Alle Host-Ports (Backend, Frontend, PostgreSQL, Redis) sind jetzt ueber Umgebungsvariablen konfigurierbar
+
 ## [0.1.1] - 2026-03-26
 
 ### Behoben
