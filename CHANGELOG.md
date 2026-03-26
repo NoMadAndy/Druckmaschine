@@ -5,6 +5,11 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.7] - 2026-03-26
+
+### Behoben
+- bcrypt-Version auf 4.0.1 gepinnt: passlib 1.7.4 ist inkompatibel mit bcrypt >= 4.1 (detect_wrap_bug schlaegt fehl, da bcrypt 4.1+ Passwoerter > 72 Bytes direkt ablehnt)
+
 ## [0.1.6] - 2026-03-26
 
 ### Behoben
