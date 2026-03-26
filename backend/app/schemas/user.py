@@ -41,3 +41,5 @@ class AuthResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserResponse
+
+    model_config = {"from_attributes": True}
