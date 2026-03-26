@@ -1,4 +1,14 @@
-const BASE_URL = import.meta.env.VITE_API_URL || '/api';
+function resolveBaseUrl(): string {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (!envUrl) return '/api';
+  // Avoid mixed content: if page is HTTPS but env URL is HTTP, use relative path
+  if (window.location.protocol === 'https:' && envUrl.startsWith('http://')) {
+    return '/api';
+  }
+  return envUrl;
+}
+
+const BASE_URL = resolveBaseUrl();
 
 interface RequestOptions {
   method?: string;

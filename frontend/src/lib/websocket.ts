@@ -21,7 +21,13 @@ export class WebSocketClient {
   private shouldReconnect = true;
 
   constructor(url?: string) {
-    const wsBase = import.meta.env.VITE_WS_URL || `ws://${window.location.host}`;
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    let wsBase = import.meta.env.VITE_WS_URL;
+    // Avoid mixed content: if page is HTTPS but env URL uses ws://, auto-detect instead
+    if (wsBase && window.location.protocol === 'https:' && wsBase.startsWith('ws://')) {
+      wsBase = '';
+    }
+    wsBase = wsBase || `${protocol}//${window.location.host}`;
     this.url = url || `${wsBase}/ws/events`;
   }
 
