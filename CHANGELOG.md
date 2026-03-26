@@ -5,6 +5,11 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.5] - 2026-03-26
+
+### Behoben
+- 500-Fehler bei Registrierung behoben: Passwoerter werden vor dem Hashing auf 72 Bytes gekuerzt (bcrypt-Limit)
+
 ## [0.1.4] - 2026-03-26
 
 ### Behoben
