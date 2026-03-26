@@ -34,8 +34,8 @@ services:
     volumes:
       - ./frontend/src:/app/src
     environment:
-      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000}
-      - VITE_WS_URL=${VITE_WS_URL:-ws://localhost:8000}
+      - PROXY_API_TARGET=http://backend:8000
+      - PROXY_WS_TARGET=ws://backend:8000
     depends_on:
       - backend
     restart: unless-stopped

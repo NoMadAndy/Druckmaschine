@@ -14,11 +14,12 @@ export default defineConfig({
     allowedHosts: ['druckmaschine.macherwerkstatt.cc'],
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: process.env.PROXY_API_TARGET || 'http://localhost:8000',
         changeOrigin: true,
+        rewrite: (path: string) => path.replace(/^\/api/, ''),
       },
       '/ws': {
-        target: 'ws://localhost:8000',
+        target: process.env.PROXY_WS_TARGET || 'ws://localhost:8000',
         ws: true,
       },
     },

@@ -5,6 +5,14 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.3] - 2026-03-26
+
+### Behoben
+- Account-Erstellung: "Failed to fetch"-Fehler behoben - Register-Endpoint gibt jetzt Access-Token zurueck
+- Login-Endpoint gibt jetzt auch User-Daten in der Antwort zurueck (Frontend erwartet `{ access_token, user }`)
+- Vite-Proxy leitet `/api`-Anfragen korrekt an Backend weiter (Prefix-Rewrite hinzugefuegt)
+- Docker-Compose: Frontend nutzt jetzt Server-seitigen Proxy statt direkter Backend-URL im Browser
+
 ## [0.1.2] - 2026-03-26
 
 ### Behoben

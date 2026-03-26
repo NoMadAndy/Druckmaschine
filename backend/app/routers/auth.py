@@ -10,13 +10,13 @@ from app.middleware.auth import (
     verify_password,
 )
 from app.models.user import User, UserRole
-from app.schemas.user import Token, UserCreate, UserLogin, UserResponse
+from app.schemas.user import AuthResponse, Token, UserCreate, UserLogin, UserResponse
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-async def register(body: UserCreate, db: AsyncSession = Depends(get_db)) -> User:
+@router.post("/register", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
+async def register(body: UserCreate, db: AsyncSession = Depends(get_db)) -> dict:
     existing = await db.execute(
         select(User).where((User.username == body.username) | (User.email == body.email))
     )
@@ -33,10 +33,11 @@ async def register(body: UserCreate, db: AsyncSession = Depends(get_db)) -> User
     db.add(user)
     await db.flush()
     await db.refresh(user)
-    return user
+    token = create_access_token({"sub": str(user.id), "role": user.role.value})
+    return {"access_token": token, "token_type": "bearer", "user": user}
 
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=AuthResponse)
 async def login(body: UserLogin, db: AsyncSession = Depends(get_db)) -> dict:
     result = await db.execute(select(User).where(User.username == body.username))
     user = result.scalar_one_or_none()
@@ -45,7 +46,7 @@ async def login(body: UserLogin, db: AsyncSession = Depends(get_db)) -> dict:
     if not user.is_active:
         raise HTTPException(status_code=403, detail="Account disabled")
     token = create_access_token({"sub": str(user.id), "role": user.role.value})
-    return {"access_token": token, "token_type": "bearer"}
+    return {"access_token": token, "token_type": "bearer", "user": user}
 
 
 @router.get("/me", response_model=UserResponse)
