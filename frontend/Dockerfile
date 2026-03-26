@@ -1,5 +1,5 @@
-# Build stage
-FROM node:20-alpine AS build
+# Development stage
+FROM node:20-alpine AS dev
 
 WORKDIR /app
 
@@ -7,6 +7,14 @@ COPY package.json package-lock.json* ./
 RUN npm install
 
 COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
+
+# Build stage
+FROM dev AS build
+
 RUN npm run build
 
 # Production stage
