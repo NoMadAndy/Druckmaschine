@@ -5,6 +5,12 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.6] - 2026-03-26
+
+### Behoben
+- 500-Fehler bei Registrierung behoben: `bcrypt__truncate_error=False` in CryptContext gesetzt, damit passlib Passwoerter ueber 72 Bytes nicht mit ValueError abweist
+- Passwort-Laenge auf maximal 128 Zeichen begrenzt (Validierung im Schema)
+
 ## [0.1.5] - 2026-03-26
 
 ### Behoben
