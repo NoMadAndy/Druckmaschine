@@ -5,6 +5,13 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.8] - 2026-03-26
+
+### Behoben
+- Mixed-Content-Fehler bei HTTPS behoben: WebSocket-Verbindung nutzt jetzt automatisch `wss://` statt `ws://` wenn die Seite ueber HTTPS geladen wird
+- API-Client faellt bei HTTPS-Seiten mit unsicherer `VITE_API_URL` (http://) automatisch auf relativen Pfad `/api` zurueck
+- `VITE_WS_URL` mit `ws://`-Protokoll wird bei HTTPS-Seiten ignoriert und stattdessen automatisch erkannt
+
 ## [0.1.7] - 2026-03-26
 
 ### Behoben
