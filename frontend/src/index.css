@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #0e0e1f;
+  --bg-card: #12122640;
+  --border-color: #ffffff0d;
+  --border-hover: #ffffff1a;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #06b6d4;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1e293b transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] shadow-lg;
+  }
+
+  .glass-hover {
+    @apply hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-200;
+  }
+
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl shadow-lg;
+  }
+
+  .glass-input {
+    @apply bg-white/[0.05] border border-white/[0.08] rounded-lg px-4 py-2.5
+           text-gray-100 placeholder-gray-500
+           focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-accent-blue/20
+           transition-all duration-200;
+  }
+
+  .glass-button {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200
+           bg-accent-blue/10 text-accent-blue border border-accent-blue/20
+           hover:bg-accent-blue/20 hover:border-accent-blue/40
+           active:scale-[0.98];
+  }
+
+  .glass-button-primary {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200
+           bg-gradient-to-r from-accent-blue to-accent-purple text-white
+           hover:shadow-lg hover:shadow-accent-blue/20
+           active:scale-[0.98];
+  }
+
+  .glass-button-danger {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200
+           bg-red-500/10 text-red-400 border border-red-500/20
+           hover:bg-red-500/20 hover:border-red-500/40
+           active:scale-[0.98];
+  }
+
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent;
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 15px #3b82f630, 0 0 30px #3b82f615;
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 15px #8b5cf630, 0 0 30px #8b5cf615;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Terminal font */
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* Custom animations */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Selection color */
+::selection {
+  background: #3b82f640;
+  color: #f1f5f9;
+}
