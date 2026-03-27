@@ -27,7 +27,9 @@ export default function Header({ onMenuToggle }: HeaderProps) {
   const clearAuth = useAuthStore((s) => s.clearAuth);
   const [searchOpen, setSearchOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const notifRef = useRef<HTMLDivElement>(null);
 
   // Derive page title
   const pathBase = '/' + location.pathname.split('/').filter(Boolean)[0] || '/';
@@ -38,13 +40,16 @@ export default function Header({ onMenuToggle }: HeaderProps) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setUserMenuOpen(false);
       }
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setNotifOpen(false);
+      }
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
   return (
-    <header className="h-16 flex items-center justify-between px-4 lg:px-6 border-b border-white/[0.06] bg-dark-800/60 backdrop-blur-xl shrink-0">
+    <header className="h-16 flex items-center justify-between px-4 lg:px-6 border-b border-white/[0.06] bg-dark-800/60 backdrop-blur-xl shrink-0 relative z-30">
       {/* Left side */}
       <div className="flex items-center gap-4">
         <button
@@ -98,10 +103,26 @@ export default function Header({ onMenuToggle }: HeaderProps) {
         </div>
 
         {/* Notifications */}
-        <button className="p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-white/[0.04] transition-colors relative">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent-blue animate-pulse" />
-        </button>
+        <div className="relative" ref={notifRef}>
+          <button
+            onClick={() => setNotifOpen(!notifOpen)}
+            className="p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-white/[0.04] transition-colors relative"
+          >
+            <Bell className="w-5 h-5" />
+          </button>
+
+          {notifOpen && (
+            <div className="absolute right-0 top-full mt-2 w-72 glass-card p-1 animate-slide-down z-50">
+              <div className="px-3 py-2 border-b border-white/[0.06]">
+                <p className="text-sm font-medium text-gray-200">Notifications</p>
+              </div>
+              <div className="px-3 py-6 text-center">
+                <Bell className="w-8 h-8 text-gray-700 mx-auto mb-2" />
+                <p className="text-xs text-gray-500">No notifications yet</p>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* User menu */}
         <div className="relative" ref={menuRef}>

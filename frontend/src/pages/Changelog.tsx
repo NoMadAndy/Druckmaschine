@@ -12,7 +12,7 @@ export default function Changelog() {
 
   useEffect(() => {
     api
-      .get<{ id: number; version: string; title: string; description: string; changes: string[]; created_at: string }[]>('/changelog/')
+      .get<{ id: number; version: string; title: string; description: string; changes: string[]; created_at: string }[]>('/changelog')
       .then((data) =>
         setEntries(
           data.map((e) => ({

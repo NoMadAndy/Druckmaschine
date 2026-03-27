@@ -40,7 +40,6 @@ app = FastAPI(
     description="AI-powered project management and automation platform",
     version=settings.VERSION,
     lifespan=lifespan,
-    redirect_slashes=False,
 )
 
 app.add_middleware(

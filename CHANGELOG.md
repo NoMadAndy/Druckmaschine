@@ -5,7 +5,7 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
-## [0.2.0] - 2026-03-27
+## [0.2.1] - 2026-03-27\n\n### Behoben\n- 404-Fehler bei `/tasks`, `/projects`, `/changelog`, `/users` behoben: Backend-Routen akzeptieren jetzt Pfade ohne Trailing-Slash\n- Changelog 500: Alle DB-Models werden jetzt explizit vor `create_all` importiert\n- GPU-Status NaN-Warnung behoben: `GaugeRing` gibt bei ungueltigem Wert 0 zurueck\n- Logs-Seite: Nicht existierende Log-Sources (ai, trading, system) entfernt — nur `app` und `docker` verfuegbar\n- Header-Dropdown wird nicht mehr vom Seiteninhalt verdeckt (z-index korrigiert)\n- Notifications-Button oeffnet jetzt ein Dropdown-Panel\n\n## [0.2.0] - 2026-03-27
 
 ### Behoben
 - Mixed-Content-Fehler endgueltig behoben: `redirect_slashes=False` in FastAPI verhindert Redirects mit internen HTTP-URLs

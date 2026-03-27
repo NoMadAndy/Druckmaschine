@@ -7,9 +7,6 @@ import api, { LogEntry } from '@/lib/api';
 const sources = [
   { id: 'app', label: 'Application' },
   { id: 'docker', label: 'Docker' },
-  { id: 'ai', label: 'AI Engine' },
-  { id: 'trading', label: 'Trading' },
-  { id: 'system', label: 'System' },
 ];
 
 export default function Logs() {

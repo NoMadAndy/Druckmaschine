@@ -32,7 +32,7 @@ class ChangelogResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
-@router.get("/", response_model=list[ChangelogResponse])
+@router.get("", response_model=list[ChangelogResponse])
 async def list_changelog(
     skip: int = 0,
     limit: int = 50,
@@ -56,7 +56,7 @@ async def list_changelog(
     return out
 
 
-@router.post("/", response_model=ChangelogResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=ChangelogResponse, status_code=status.HTTP_201_CREATED)
 async def create_changelog(
     body: ChangelogCreate,
     _admin: User = Depends(get_current_admin),

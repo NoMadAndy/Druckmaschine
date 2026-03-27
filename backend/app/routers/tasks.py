@@ -18,7 +18,7 @@ router = APIRouter(prefix="/tasks", tags=["tasks"])
 _cancel_events: dict[int, asyncio.Event] = {}
 
 
-@router.post("/", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
 async def create_task(
     body: TaskCreate,
     background_tasks: BackgroundTasks,
@@ -72,7 +72,7 @@ async def _run_task_background(task_id: int, cancel_event: asyncio.Event) -> Non
             _cancel_events.pop(task_id, None)
 
 
-@router.get("/", response_model=list[TaskResponse])
+@router.get("", response_model=list[TaskResponse])
 async def list_tasks(
     project_id: int | None = None,
     skip: int = 0,

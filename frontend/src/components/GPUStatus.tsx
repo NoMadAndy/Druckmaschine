@@ -10,9 +10,10 @@ interface GPUStatusProps {
 }
 
 function GaugeRing({ value, size = 80, color }: { value: number; size?: number; color: string }) {
+  const safeValue = Number.isFinite(value) ? value : 0;
   const radius = (size - 8) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (value / 100) * circumference;
+  const offset = circumference - (safeValue / 100) * circumference;
 
   return (
     <div className="relative" style={{ width: size, height: size }}>
