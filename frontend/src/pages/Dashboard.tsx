@@ -11,7 +11,6 @@ import { useProjectStore } from '@/stores/projectStore';
 import TaskInput from '@/components/TaskInput';
 import TaskCard from '@/components/TaskCard';
 import GPUStatus from '@/components/GPUStatus';
-import api, { type Task } from '@/lib/api';
 
 interface ActivityItem {
   id: string;
@@ -52,7 +51,6 @@ export default function Dashboard() {
   useEffect(() => {
     fetchTasks();
     fetchProjects();
-    api.get<ActivityItem[]>('/activity/recent').then(setActivity).catch(() => {});
   }, [fetchTasks, fetchProjects]);
 
   useWSEvent<ActivityItem>('activity:new', (item) => {

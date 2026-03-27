@@ -28,7 +28,7 @@ export class WebSocketClient {
       wsBase = '';
     }
     wsBase = wsBase || `${protocol}//${window.location.host}`;
-    this.url = url || `${wsBase}/ws/events`;
+    this.url = url || `${wsBase}/ws`;
   }
 
   get status(): ConnectionStatus {

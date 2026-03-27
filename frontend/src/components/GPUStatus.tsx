@@ -62,7 +62,7 @@ export default function GPUStatus({ className, compact = false }: GPUStatusProps
   const [gpu, setGpu] = useState<GPUInfo | null>(null);
 
   useEffect(() => {
-    api.get<GPUInfo>('/system/gpu').then(setGpu).catch(() => {});
+    api.get<GPUInfo>('/ai/gpu-status').then(setGpu).catch(() => {});
   }, []);
 
   useWSEvent<GPUInfo>('gpu:status', (data) => {

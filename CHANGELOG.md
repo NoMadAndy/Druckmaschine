@@ -5,6 +5,16 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.1.9] - 2026-03-27
+
+### Behoben
+- Mixed-Content-Fehler bei API-Aufrufen behoben: nginx `proxy_pass` entfernt jetzt das `/api/`-Praefix korrekt (trailing slash), sodass Requests die Backend-Routen erreichen
+- GPU-Status 404 behoben: Frontend ruft jetzt `/ai/gpu-status` statt `/system/gpu` auf (passend zur Backend-Route)
+- Nicht existierenden `/activity/recent`-Endpoint entfernt (Dashboard nutzt stattdessen WebSocket-Events)
+- WebSocket 403 behoben: Verbindungs-URL von `/ws/events` auf `/ws` korrigiert (passend zur Backend-Route)
+- nginx WebSocket-Location von `/ws/` auf `/ws` geaendert fuer exaktes Path-Matching
+- `X-Forwarded-Proto` Header fuer WebSocket-Proxy hinzugefuegt
+
 ## [0.1.8] - 2026-03-26
 
 ### Behoben
