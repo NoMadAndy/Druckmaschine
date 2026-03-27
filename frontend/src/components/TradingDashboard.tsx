@@ -41,7 +41,7 @@ export default function TradingDashboard({ className }: TradingDashboardProps) {
   const [strategy, setStrategy] = useState('momentum');
 
   useEffect(() => {
-    api.get<TradingPortfolio>('/trading/portfolio').then(setPortfolio).catch(() => {});
+    api.get<TradingPortfolio>('/trading/portfolio').then(setPortfolio).catch(() => setPortfolio(null));
   }, []);
 
   useWSEvent<TradingPortfolio>('trading:update', setPortfolio);

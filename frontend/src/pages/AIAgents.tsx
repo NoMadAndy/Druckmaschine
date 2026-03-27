@@ -10,7 +10,7 @@ export default function AIAgents() {
 
   const fetchAgents = async () => {
     try {
-      const data = await api.get<AIAgent[]>('/agents');
+      const data = await api.get<AIAgent[]>('/ai/agents');
       setAgents(data);
     } catch {
       setAgents([]);

@@ -5,6 +5,16 @@ Alle bemerkenswerten Aenderungen an diesem Projekt werden in dieser Datei dokume
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [0.2.0] - 2026-03-27
+
+### Behoben
+- Mixed-Content-Fehler endgueltig behoben: `redirect_slashes=False` in FastAPI verhindert Redirects mit internen HTTP-URLs
+- Fake-Changelog entfernt: Keine hardcodierten Demodaten mehr, Changelog-Seite zeigt nur noch echte Daten aus der Datenbank
+- 404 `/api/agents` behoben: Frontend ruft jetzt `/ai/agents` auf (passend zur Backend-Route)
+- 404 `/api/logs` behoben: Frontend nutzt jetzt `/logs/{source}?lines=200` statt `/logs?source=...&limit=200`
+- 404 `/api/trading/portfolio` behoben: Neuen Trading-Router mit Portfolio-Endpoint erstellt
+- NaN-Warnung in GPU-Status behoben: Division durch Null bei fehlenden GPU-Werten abgefangen
+
 ## [0.1.9] - 2026-03-27
 
 ### Behoben

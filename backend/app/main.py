@@ -40,6 +40,7 @@ app = FastAPI(
     description="AI-powered project management and automation platform",
     version=settings.VERSION,
     lifespan=lifespan,
+    redirect_slashes=False,
 )
 
 app.add_middleware(
@@ -50,7 +51,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from app.routers import auth, users, projects, tasks, logs, changelog, websocket, ai_agents
+from app.routers import auth, users, projects, tasks, logs, changelog, websocket, ai_agents, trading
 
 app.include_router(auth.router)
 app.include_router(users.router)
@@ -60,6 +61,7 @@ app.include_router(logs.router)
 app.include_router(changelog.router)
 app.include_router(websocket.router)
 app.include_router(ai_agents.router)
+app.include_router(trading.router)
 
 static_path = Path(settings.STATIC_DIR)
 if static_path.exists():

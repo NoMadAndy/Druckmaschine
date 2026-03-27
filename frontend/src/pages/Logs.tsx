@@ -20,8 +20,18 @@ export default function Logs() {
   useEffect(() => {
     setLoading(true);
     api
-      .get<LogEntry[]>(`/logs?source=${activeSource}&limit=200`)
-      .then(setLogs)
+      .get<{ logs: string[]; total: number }>(`/logs/${activeSource}?lines=200`)
+      .then((data) =>
+        setLogs(
+          data.logs.map((line, i) => ({
+            id: String(i),
+            timestamp: new Date().toISOString(),
+            level: 'info' as const,
+            message: line,
+            source: activeSource,
+          }))
+        )
+      )
       .catch(() => setLogs([]))
       .finally(() => setLoading(false));
   }, [activeSource]);

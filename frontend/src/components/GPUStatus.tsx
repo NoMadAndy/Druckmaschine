@@ -80,8 +80,8 @@ export default function GPUStatus({ className, compact = false }: GPUStatusProps
     );
   }
 
-  const memPercent = (gpu.memory_used / gpu.memory_total) * 100;
-  const powerPercent = (gpu.power_draw / gpu.power_limit) * 100;
+  const memPercent = gpu.memory_total ? (gpu.memory_used / gpu.memory_total) * 100 : 0;
+  const powerPercent = gpu.power_limit ? (gpu.power_draw / gpu.power_limit) * 100 : 0;
 
   if (compact) {
     return (

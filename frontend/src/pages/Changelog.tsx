@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { FileText, Loader2, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChangelogView from '@/components/ChangelogView';
-import api, { ChangelogEntry } from '@/lib/api';
+import api from '@/lib/api';
+import type { ChangelogEntry } from '@/lib/api';
 
 export default function Changelog() {
   const [entries, setEntries] = useState<ChangelogEntry[]>([]);
@@ -11,52 +12,20 @@ export default function Changelog() {
 
   useEffect(() => {
     api
-      .get<ChangelogEntry[]>('/changelog')
-      .then(setEntries)
-      .catch(() => {
-        // Use demo data if API unavailable
-        setEntries([
-          {
-            version: '2.1.0',
-            date: '2026-03-20',
+      .get<{ id: number; version: string; title: string; description: string; changes: string[]; created_at: string }[]>('/changelog/')
+      .then((data) =>
+        setEntries(
+          data.map((e) => ({
+            version: e.version,
+            date: e.created_at.split('T')[0],
             entries: [
-              { type: 'feature', description: 'Added real-time trading dashboard with portfolio tracking' },
-              { type: 'feature', description: 'AI Agent management panel with execution history' },
-              { type: 'improvement', description: 'Improved WebSocket reconnection logic with exponential backoff' },
-              { type: 'fix', description: 'Fixed memory leak in live terminal component' },
+              ...(e.title ? [{ type: 'feature' as const, description: e.title }] : []),
+              ...e.changes.map((c) => ({ type: 'improvement' as const, description: c })),
             ],
-          },
-          {
-            version: '2.0.0',
-            date: '2026-03-10',
-            entries: [
-              { type: 'breaking', description: 'Complete frontend rewrite with React 18 and TypeScript' },
-              { type: 'feature', description: 'New glass-morphism design system with dark theme' },
-              { type: 'feature', description: 'Real-time log viewer with filtering and auto-scroll' },
-              { type: 'improvement', description: 'Mobile-first responsive layout with collapsible sidebar' },
-            ],
-          },
-          {
-            version: '1.5.0',
-            date: '2026-02-25',
-            entries: [
-              { type: 'feature', description: 'GPU monitoring with real-time utilization gauges' },
-              { type: 'feature', description: 'Project management with task tracking' },
-              { type: 'fix', description: 'Fixed authentication token refresh on session expiry' },
-            ],
-          },
-          {
-            version: '1.0.0',
-            date: '2026-02-01',
-            entries: [
-              { type: 'feature', description: 'Initial release of Druckmaschine platform' },
-              { type: 'feature', description: 'Task creation and execution pipeline' },
-              { type: 'feature', description: 'JWT-based authentication system' },
-              { type: 'feature', description: 'Docker-based deployment with Nginx reverse proxy' },
-            ],
-          },
-        ]);
-      })
+          }))
+        )
+      )
+      .catch(() => setEntries([]))
       .finally(() => setLoading(false));
   }, []);
 
